@@ -9,6 +9,13 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class StaticPagesControllerTest extends IntegrationTestCase
 {
+    public $base_title;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        $this->base_title = 'Ruby on Rails Tutorial Sample App';
+    }
 
     /**
      * Test home method
@@ -19,6 +26,7 @@ class StaticPagesControllerTest extends IntegrationTestCase
     {
         $this->get('/home');
         $this->assertTemplate('StaticPages/home');
+        $this->assertResponseContains("Home | {$this->base_title}");
     }
     
     /**
@@ -30,6 +38,7 @@ class StaticPagesControllerTest extends IntegrationTestCase
     {
         $this->get('/help');
         $this->assertTemplate('StaticPages/help');
+        $this->assertResponseContains("Help | {$this->base_title}");
     }
     
     /**
@@ -41,5 +50,18 @@ class StaticPagesControllerTest extends IntegrationTestCase
     {
         $this->get('/about');
         $this->assertTemplate('StaticPages/about');
+        $this->assertResponseContains("About | {$this->base_title}");
+    }
+    
+    /**
+     * Test contact method
+     *
+     * @return void
+     */
+    public function testContact()
+    {
+        $this->get('/contact');
+        $this->assertTemplate('StaticPages/contact');
+        $this->assertResponseContains("Contact | {$this->base_title}");
     }
 }

@@ -1,2 +1,6 @@
-<h1>StaticPages#home</h1>
-<p>Find me in src/Template/StaticPages/home.ctp</p>
+<h1>Sample App</h1>
+<p>
+  This is the home page for the
+  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+  sample application.
+</p>

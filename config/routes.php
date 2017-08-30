@@ -54,9 +54,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
-    $routes->connect('/home',  ['controller' => 'StaticPages', 'action' => 'home']);
-    $routes->connect('/help',  ['controller' => 'StaticPages', 'action' => 'help']);
-    $routes->connect('/about', ['controller' => 'StaticPages', 'action' => 'about']);
+    $routes->connect('/home',    ['controller' => 'StaticPages', 'action' => 'home']);
+    $routes->connect('/help',    ['controller' => 'StaticPages', 'action' => 'help']);
+    $routes->connect('/about',   ['controller' => 'StaticPages', 'action' => 'about']);
+    $routes->connect('/contact', ['controller' => 'StaticPages', 'action' => 'contact']);
 
     /**
      * Connect catchall routes for all controllers.
