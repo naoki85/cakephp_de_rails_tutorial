@@ -9,6 +9,3 @@
 
   <?= $this->Html->link("Sign up now!", '#', ["class" => "btn btn-lg btn-primary"]); ?>
 </div>
-
-<?= $this->Html->link($this->Html->image("rails.png", ["alt" => "Rails logo"]),
-            'http://rubyonrails.org/', ['escape' => false]); ?>

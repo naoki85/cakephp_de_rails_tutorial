@@ -101,18 +101,7 @@ $this->prepend('script', $this->Html->script(['jquery/jquery', '//maxcdn.bootstr
 
     <?= $this->fetch('tb_body_start'); ?>
     
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <?= $this->Html->link("sample app", '#',['id' => "logo"]); ?>
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <li><?= $this->Html->link("Home",   '#'); ?></li>
-            <li><?= $this->Html->link("Help",   '#'); ?></li>
-            <li><?= $this->Html->link("Log in", '#'); ?></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <?= $this->element('Layout/header'); ?>
     
     <?= $this->fetch('tb_flash'); ?>
     
@@ -120,19 +109,7 @@ $this->prepend('script', $this->Html->script(['jquery/jquery', '//maxcdn.bootstr
       <?= $this->fetch('content'); ?>
     </div>
     
-    <footer class="footer">
-      <small>
-        The <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
-        by <a href="http://www.michaelhartl.com/">Michael Hartl</a>
-      </small>
-      <nav>
-        <ul>
-          <li><?= $this->Html->link("About",   '#'); ?></li>
-          <li><?= $this->Html->link("Contact", '#'); ?></li>
-          <li><a href="http://news.railstutorial.org/">News</a></li>
-        </ul>
-      </nav>
-    </footer>
+    <?= $this->element('Layout/footer'); ?>
 
     <?= $this->fetch('script'); ?>
     <?= $this->fetch('tb_body_end'); ?>
