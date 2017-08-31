@@ -1,56 +1,140 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+use Cake\Core\Configure;
+
+/**
+ * Default `html` block.
+ */
+if (!$this->fetch('html')) {
+    $this->start('html');
+    printf('<html lang="%s" class="no-js">', Configure::read('App.language'));
+    $this->end();
+}
+
+/**
+ * Default `title` block.
+ */
+if (!$this->fetch('title')) {
+    $this->start('title');
+    echo Configure::read('App.title');
+    $this->end();
+}
+
+/**
+ * Default `footer` block.
+ */
+if (!$this->fetch('tb_footer')) {
+    $this->start('tb_footer');
+    printf('&copy;%s %s', date('Y'), Configure::read('App.title'));
+    $this->end();
+}
+
+/**
+ * Default `body` block.
+ */
+$this->prepend('tb_body_attrs', ' class="' . implode(' ', [$this->request->controller, $this->request->action]) . '" ');
+if (!$this->fetch('tb_body_start')) {
+    $this->start('tb_body_start');
+    echo '<body' . $this->fetch('tb_body_attrs') . '>';
+    $this->end();
+}
+/**
+ * Default `flash` block.
+ */
+if (!$this->fetch('tb_flash')) {
+    $this->start('tb_flash');
+    if (isset($this->Flash))
+        echo $this->Flash->render();
+    $this->end();
+}
+if (!$this->fetch('tb_body_end')) {
+    $this->start('tb_body_end');
+    echo '</body>';
+    $this->end();
+}
+
+/**
+ * Prepend `meta` block with `author` and `favicon`.
+ */
+$this->prepend('meta', $this->Html->meta('author', null, ['name' => 'author', 'content' => Configure::read('App.author')]));
+$this->prepend('meta', $this->Html->meta('favicon.ico', '/favicon.ico', ['type' => 'icon']));
+
+/**
+ * Prepend `css` block with Bootstrap stylesheets and append
+ * the `$html5Shim`.
+ */
+$html5Shim =
+<<<HTML
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+HTML;
+$this->prepend('css', $this->Html->css(['//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css']));
+
+$this->append('css', $html5Shim);
+
+/**
+ * Prepend `script` block with jQuery and Bootstrap scripts
+ */
+$this->prepend('script', $this->Html->script(['jquery/jquery', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js']));
+
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $this->MyUtil->fullTitle(); ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+<?= $this->fetch('html') ?>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-</head>
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
+    <head>
+
+        <?= $this->Html->charset() ?>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+
+        <title><?= $this->MyUtil->fullTitle(); ?></title>
+
+        <?= $this->fetch('meta') ?>
+        <?= $this->fetch('css') ?>
+        <?= $this->Html->css('custom.css') ?>
+
+    </head>
+
+    <?= $this->fetch('tb_body_start'); ?>
+    
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <?= $this->Html->link("sample app", '#',['id' => "logo"]); ?>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <li><?= $this->Html->link("Home",   '#'); ?></li>
+            <li><?= $this->Html->link("Help",   '#'); ?></li>
+            <li><?= $this->Html->link("Log in", '#'); ?></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <?= $this->fetch('tb_flash'); ?>
+    
+    <div class="container">
+      <?= $this->fetch('content'); ?>
     </div>
-    <footer>
+    
+    <footer class="footer">
+      <small>
+        The <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+        by <a href="http://www.michaelhartl.com/">Michael Hartl</a>
+      </small>
+      <nav>
+        <ul>
+          <li><?= $this->Html->link("About",   '#'); ?></li>
+          <li><?= $this->Html->link("Contact", '#'); ?></li>
+          <li><a href="http://news.railstutorial.org/">News</a></li>
+        </ul>
+      </nav>
     </footer>
-</body>
+
+    <?= $this->fetch('script'); ?>
+    <?= $this->fetch('tb_body_end'); ?>
+
 </html>
