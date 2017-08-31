@@ -5,8 +5,8 @@
   </small>
   <nav>
     <ul>
-      <li><?= $this->Html->link("About",   '#'); ?></li>
-      <li><?= $this->Html->link("Contact", '#'); ?></li>
+      <li><?= $this->Html->link("About",   ['controller' => 'StaticPages', 'action' => 'about']); ?></li>
+      <li><?= $this->Html->link("Contact", ['controller' => 'StaticPages', 'action' => 'contact']); ?></li>
       <li><a href="http://news.railstutorial.org/">News</a></li>
     </ul>
   </nav>
