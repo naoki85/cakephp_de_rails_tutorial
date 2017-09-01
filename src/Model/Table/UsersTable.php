@@ -94,7 +94,7 @@ class UsersTable extends Table
             
         $validator
             ->add('password_confirmation', [
-                'comWith' => [
+                'compare' => [
                     'rule' => ['compareWith', 'password'],
                     'message' => 'Not correct password',
                 ]

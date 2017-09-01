@@ -78,6 +78,14 @@ class UsersTableTest extends TestCase
         $this->data['email'] = sprintf("%s@example.com", str_repeat('a', 244));
         $user = $this->Users->newEntity($this->data);
         $this->assertNotEmpty($user->errors());
+        
+        $invalid_emails = ['user@example,com', 'user_at_foo.org', 'user.name@example.',
+                           'foo@bar_baz.com', 'foo@bar+baz.com'];
+        foreach ($invalid_emails as $email) {
+            $this->data['email'] = $email;
+            $user = $this->Users->newEntity($this->data);
+            $this->assertNotEmpty($user->errors());
+        }
     }
     
     public function testValidationOfPasswordAndPasswordConfirmation()
@@ -90,6 +98,7 @@ class UsersTableTest extends TestCase
         $user = $this->Users->newEntity($this->data);
         $this->assertNotEmpty($user->errors());
         
+        $this->data['password'] = 'foobar';
         $this->data['password_confirmation'] = 'hogehoge';
         $user = $this->Users->newEntity($this->data);
         $this->assertNotEmpty($user->errors());
