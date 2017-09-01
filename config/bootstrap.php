@@ -218,3 +218,5 @@ if (Configure::read('debug')) {
 
 /* Bootstrap */
 Plugin::load('BootstrapUI');
+/* Migration */
+Plugin::load('Migrations');
