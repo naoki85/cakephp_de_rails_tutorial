@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Users Model
@@ -34,6 +35,9 @@ class UsersTable extends Table
 
         $this->setTable('users');
         $this->setDisplayField('name');
+        $this->setDisplayField('email');
+        $this->setDisplayField('password');
+        $this->setDisplayField('password_confirmation');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -76,6 +80,25 @@ class UsersTable extends Table
                 'rule' => [$this, 'validateMailFormat'],
                 'message' => 'Invalid mail format'
             ]);
+            
+        $validator
+            ->scalar('password')
+            ->requirePresence('password')
+            ->notEmpty('password')
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 6],
+                    'message' => 'Email need to be at least 6 characters long',
+                ]
+            ]);
+            
+        $validator
+            ->add('password_confirmation', [
+                'comWith' => [
+                    'rule' => ['compareWith', 'password'],
+                    'message' => 'Not correct password',
+                ]
+            ]);
 
         return $validator;
     }
@@ -96,11 +119,15 @@ class UsersTable extends Table
     
     public function beforeSave($event, $entity, $options)
     {
+        $hasher = new DefaultPasswordHasher();
+        $entity->password_digest = $hasher->hash($entity->password);
+        
         $entity->email = mb_strtolower($entity->email);
+        
         return;
     }
     
-    public static function validateMailFormat($value, $context)
+    public static function validateMailFormat($value)
     {
         return (bool) preg_match("/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i", $value);
     }

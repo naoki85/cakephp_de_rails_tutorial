@@ -38,7 +38,8 @@ class UsersTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::exists('Users') ? [] : ['className' => UsersTable::class];
         $this->Users = TableRegistry::get('Users', $config);
-        $this->data = ['name' => 'Example User', 'email' => 'user@example.com'];
+        $this->data = ['name' => 'Example User', 'email' => 'user@example.com',
+            'password' => 'foobar', 'password_confirmation' => 'foobar'];
     }
 
     /**
@@ -75,6 +76,21 @@ class UsersTableTest extends TestCase
         $this->assertNotEmpty($user->errors());
         
         $this->data['email'] = sprintf("%s@example.com", str_repeat('a', 244));
+        $user = $this->Users->newEntity($this->data);
+        $this->assertNotEmpty($user->errors());
+    }
+    
+    public function testValidationOfPasswordAndPasswordConfirmation()
+    {
+        $this->data['password'] = '';
+        $user = $this->Users->newEntity($this->data);
+        $this->assertNotEmpty($user->errors());
+        
+        $this->data['password'] = str_repeat('a', 5);
+        $user = $this->Users->newEntity($this->data);
+        $this->assertNotEmpty($user->errors());
+        
+        $this->data['password_confirmation'] = 'hogehoge';
         $user = $this->Users->newEntity($this->data);
         $this->assertNotEmpty($user->errors());
     }
