@@ -79,6 +79,14 @@ class UsersTableTest extends TestCase
         $user = $this->Users->newEntity($this->data);
         $this->assertNotEmpty($user->errors());
         
+        $valid_emails = ['user@example.com', 'USER@foo.COM', 'A_US-ER@foo.bar.org',
+                         'first.last@foo.jp', 'alice+bob@baz.cn'];
+        foreach ($valid_emails as $email) {
+            $this->data['email'] = $email;
+            $user = $this->Users->newEntity($this->data);
+            $this->assertEmpty($user->errors());
+        }
+        
         $invalid_emails = ['user@example,com', 'user_at_foo.org', 'user.name@example.',
                            'foo@bar_baz.com', 'foo@bar+baz.com'];
         foreach ($invalid_emails as $email) {

@@ -75,10 +75,6 @@ class UsersTable extends Table
                     'rule' => ['maxLength', 255],
                     'message' => 'Email need to be at most 255 characters long',
                 ]
-            ])
-            ->add('email', 'custom', [
-                'rule' => [$this, 'validateMailFormat'],
-                'message' => 'Invalid mail format'
             ]);
             
         $validator
@@ -125,10 +121,5 @@ class UsersTable extends Table
         $entity->email = mb_strtolower($entity->email);
         
         return;
-    }
-    
-    public static function validateMailFormat($value)
-    {
-        return (bool) preg_match("/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i", $value);
     }
 }
