@@ -13,11 +13,12 @@ class MyUtilHelper extends Helper
     /**
      * Return full title for the title tag. 
      * 
+     * @param  [String]
      * @return [String]
      */
-    public function fullTitle()
+    public function fullTitle($title)
     {
-        $title = $this->_View->get('title');
+        if (empty($title)) $title = 'Sample App';
         $base_title = "Ruby on Rails Tutorial Sample App";
         return "{$title} | {$base_title}";
     }

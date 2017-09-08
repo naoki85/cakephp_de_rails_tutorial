@@ -79,7 +79,7 @@ $this->append('css', $html5Shim);
 /**
  * Prepend `script` block with jQuery and Bootstrap scripts
  */
-$this->prepend('script', $this->Html->script(['jquery/jquery', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js']));
+$this->prepend('script', $this->Html->script(['//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js']));
 
 ?>
 <!DOCTYPE html>
@@ -91,11 +91,12 @@ $this->prepend('script', $this->Html->script(['jquery/jquery', '//maxcdn.bootstr
         <?= $this->Html->charset() ?>
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
 
-        <title><?= $this->MyUtil->fullTitle(); ?></title>
+        <title><?= $this->MyUtil->fullTitle($title); ?></title>
 
         <?= $this->fetch('meta') ?>
         <?= $this->fetch('css') ?>
         <?= $this->Html->css('custom.css') ?>
+        <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="crossorigin="anonymous"></script>
 
     </head>
 
