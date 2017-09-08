@@ -77,6 +77,21 @@ p {
   text-decoration: none;
 }
 
+/* sidebar */
+.side-nav li a:not(.button) {
+    color: #15848F;
+}
+
+.side-nav li a:not(.button):hover {
+    color: #15848F;
+}
+
+.side-nav li.heading {
+    color: #1798A5;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 /* footer */
 
 footer {

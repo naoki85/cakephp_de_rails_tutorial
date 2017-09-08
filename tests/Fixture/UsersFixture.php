@@ -22,7 +22,7 @@ class UsersFixture extends TestFixture
             'id' => 1,
             'name' => 'test_name',
             'email' => 'test@example.com',
-            'password_digest' => '',
+            'password_digest' => '123456789',
             'created' => '2017-08-31 22:42:05',
             'modified' => '2017-08-31 22:42:05'
         ],
